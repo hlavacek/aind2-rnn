@@ -43,8 +43,8 @@ def build_part1_RNN(window_size):
 def cleaned_text(text):
     # punctuation = ['!', ',', '.', ':', ';', '?']
 
-    text = re.sub(r'[^\\!,\\.:;\\?a-z\\ \\\\]', ' ', text)
-    return re.sub(r'\\ +', ' ', text);
+    text = re.sub(r'[^!,.:;?a-z ]', ' ', text)
+    return re.sub(r' +', ' ', text);
 
 ### TODO: fill out the function below that transforms the input text and window-size into a set of input/output pairs for use with our RNN model
 def window_transform_text(text, window_size, step_size):
@@ -56,7 +56,7 @@ def window_transform_text(text, window_size, step_size):
         input_window = []
         for j in range(0, window_size):
             input_window.append(text[i + j])
-        inputs.append(input_window)
+        inputs.append(''.join(input_window))
         outputs.append(text[i + window_size])
 
     return inputs, outputs
@@ -70,3 +70,5 @@ def build_part2_RNN(window_size, num_chars):
     model.add(Dense(num_chars, activation='softmax'))
 
     return model
+
+print(window_transform_text('skakal pes pres oves, pres zelenou louku', 5, 2))

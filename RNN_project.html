@@ -11943,18 +11943,16 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="1.2--Cutting-our-time-series-into-sequences">1.2  Cutting our time series into sequences<a class="anchor-link" href="#1.2--Cutting-our-time-series-into-sequences">&#182;</a></h2><p>Remember, our time series is a sequence of numbers that we can represent in general mathematically as</p>
-<p>$$s_{0},s_{1},s_{2},...,s_{P}$$</p>
-<p>where $s_{p}$ is the numerical value of the time series at time period $p$ and where $P$ is the total length of the series.  In order to apply our RNN we treat the time series prediction problem as a regression problem, and so need to use a sliding window to construct a set of associated input/output pairs to regress on.  This process is animated in the gif below.</p>
+$$s_{0},s_{1},s_{2},...,s_{P}$$<p>where $s_{p}$ is the numerical value of the time series at time period $p$ and where $P$ is the total length of the series.  In order to apply our RNN we treat the time series prediction problem as a regression problem, and so need to use a sliding window to construct a set of associated input/output pairs to regress on.  This process is animated in the gif below.</p>
 <p><img src="images/timeseries_windowing_training.gif" width=600 height=600/></p>
 <p>For example - using a window of size T = 5 (as illustrated in the gif above) we produce a set of input/output pairs like the one shown in the table below</p>
-<p>$$\begin{array}{c|c}
+$$\begin{array}{c|c}
 \text{Input} &amp; \text{Output}\\
 \hline \color{CornflowerBlue} {\langle s_{1},s_{2},s_{3},s_{4},s_{5}\rangle} &amp; \color{Goldenrod}{ s_{6}} \\
 \ \color{CornflowerBlue} {\langle s_{2},s_{3},s_{4},s_{5},s_{6} \rangle } &amp; \color{Goldenrod} {s_{7} } \\
 \color{CornflowerBlue}  {\vdots} &amp; \color{Goldenrod} {\vdots}\\
 \color{CornflowerBlue} { \langle s_{P-5},s_{P-4},s_{P-3},s_{P-2},s_{P-1} \rangle } &amp; \color{Goldenrod} {s_{P}}
-\end{array}$$</p>
-<p>Notice here that each input is a sequence (or vector) of length 5 (and in general has length equal to the window size T) while each corresponding output is a scalar value.  Notice also how given a time series of length P and window size T = 5 as shown above, we created P - 5  input/output pairs.  More generally, for a window size T we create P - T such pairs.</p>
+\end{array}$$<p>Notice here that each input is a sequence (or vector) of length 5 (and in general has length equal to the window size T) while each corresponding output is a scalar value.  Notice also how given a time series of length P and window size T = 5 as shown above, we created P - 5  input/output pairs.  More generally, for a window size T we create P - T such pairs.</p>
 
 </div>
 </div>
@@ -12703,16 +12701,14 @@ this corpus has 33 unique characters
 <p><img src="images/text_windowing_training.gif" width=400 height=400/></p>
 <p>Notice one aspect of the sliding window in this gif that does not mirror the analogous gif for time series shown in part 1 of the notebook - we do not need to slide the window along one character at a time but can move by a fixed step size $M$ greater than 1 (in the gif indeed $M = 1$).  This is done with large input texts (like ours which has over 500,000 characters!) when sliding the window along one character at a time we would create far too many input/output pairs to be able to reasonably compute with.</p>
 <p>More formally lets denote our text corpus - which is one long string of characters - as follows</p>
-<p>$$s_{0},s_{1},s_{2},...,s_{P}$$</p>
-<p>where $P$ is the length of the text (again for our text $P \approx 500,000!$).  Sliding a window of size T = 5 with a step length of M = 1 (these are the parameters shown in the gif above) over this sequence produces the following list of input/output pairs</p>
-<p>$$\begin{array}{c|c}
+$$s_{0},s_{1},s_{2},...,s_{P}$$<p>where $P$ is the length of the text (again for our text $P \approx 500,000!$).  Sliding a window of size T = 5 with a step length of M = 1 (these are the parameters shown in the gif above) over this sequence produces the following list of input/output pairs</p>
+$$\begin{array}{c|c}
 \text{Input} &amp; \text{Output}\\
 \hline \color{CornflowerBlue} {\langle s_{1},s_{2},s_{3},s_{4},s_{5}\rangle} &amp; \color{Goldenrod}{ s_{6}} \\
 \ \color{CornflowerBlue} {\langle s_{2},s_{3},s_{4},s_{5},s_{6} \rangle } &amp; \color{Goldenrod} {s_{7} } \\
 \color{CornflowerBlue}  {\vdots} &amp; \color{Goldenrod} {\vdots}\\
 \color{CornflowerBlue} { \langle s_{P-5},s_{P-4},s_{P-3},s_{P-2},s_{P-1} \rangle } &amp; \color{Goldenrod} {s_{P}}
-\end{array}$$</p>
-<p>Notice here that each input is a sequence (or vector) of 5 characters (and in general has length equal to the window size T) while each corresponding output is a single character.  We created around P total number of input/output pairs  (for general step size M we create around ceil(P/M) pairs).</p>
+\end{array}$$<p>Notice here that each input is a sequence (or vector) of 5 characters (and in general has length equal to the window size T) while each corresponding output is a single character.  We created around P total number of input/output pairs  (for general step size M we create around ceil(P/M) pairs).</p>
 
 </div>
 </div>
@@ -12888,7 +12884,7 @@ and these characters are
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="2.5--One-hot-encoding-characters">2.5  One-hot encoding characters<a class="anchor-link" href="#2.5--One-hot-encoding-characters">&#182;</a></h2><p>The last issue we have to deal with is representing our text data as numerical data so that we can use it as an input to a neural network. One of the conceptually simplest ways of doing this is via a 'one-hot encoding' scheme.  Here's how it works.</p>
 <p>We transform each character in our inputs/outputs into a vector with length equal to the number of unique characters in our text.  This vector is all zeros except one location where we place a 1 - and this location is unique to each character type.  e.g., we transform 'a', 'b', and 'c' as follows</p>
-<p>$$a\longleftarrow\left[\begin{array}{c}
+$$a\longleftarrow\left[\begin{array}{c}
 1\\
 0\\
 0\\
@@ -12909,8 +12905,7 @@ and these characters are
 \vdots\\
 0\\
 0 
-\end{array}\right]\cdots$$</p>
-<p>where each vector has 32 entries (or in general: number of entries = number of unique characters in text).</p>
+\end{array}\right]\cdots$$<p>where each vector has 32 entries (or in general: number of entries = number of unique characters in text).</p>
 
 </div>
 </div>
@@ -13623,6 +13618,19 @@ r was and this in my mont, i seen that i would be her in the matter.  the was a 
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+</div>
 </div>
 </div>
 
