@@ -43,7 +43,7 @@ def build_part1_RNN(window_size):
 def cleaned_text(text):
     # punctuation = ['!', ',', '.', ':', ';', '?']
 
-    text = re.sub(r'[^\\!,\\.:;\\?a-z\\ ]', ' ', text)
+    text = re.sub(r'[^\\!,\\.:;\\?a-z\\ \\\\]', ' ', text)
     return re.sub(r'\\ +', ' ', text);
 
 ### TODO: fill out the function below that transforms the input text and window-size into a set of input/output pairs for use with our RNN model
